@@ -9,8 +9,11 @@ echo "Hola mundo";
 
     $arch = fopen('registro.txt','w');
 
-    fwrite($arch,$nombre.",");
-    fwrite($arch,$apellido );
+    fwrite($arch,$nombre.";");
+    fwrite($arch,$apellido.";" );
+    fwrite($arch,$correo.";" );
+    fwrite($arch,$pass.";" );
+    fwrite($arch,$repass.";");
     fclose($arch);
 }
 //back
