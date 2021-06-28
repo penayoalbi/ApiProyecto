@@ -1,19 +1,23 @@
 <?php
-    class accesoDatos{
+echo"acceso a datos";
+
+    class accesoDatos
+    {
         private static $objAcceso;
         private $objetoPDO;
-
         private function __construct(){
-        $database='mitienda';
-        $user='root';
-	    $password='cr7carplove2911.';
-            try{
-                $this->objetoPDO = new PDO('mysql:host=127.0.0.1;dbname=charset=utf8'.$database,$user,$password);
-                $this->objetoPDO = exec("SET CHARACTER SET utf8"); 
-                echo "Se conecto a la base de datos";
+          try{
+              
+             //$this->objetoPDO = new PDO("mysql:host=localhost","mitienda","root","cr7carplove2911.");
+               $this->objetoPDO = new PDO('mysql:host=localhost;dbname=mitienda;user=root;password=cr7carplove2911.'); 
+               $this->objetoPDO = exec("SET CHARACTER SET utf8"); 
+               
+                
             }catch(PDOException $e){
-                echo"ERROR".$e->getMessage();
+                 print "ERROR".$e->getMessage();
+                die();
             }
+            
         }
 
         public static function obtenerInstancia()
@@ -26,6 +30,7 @@
     
         public function prepararConsulta($sql)
         {
+
             return $this->objetoPDO->prepare($sql);
         }
 

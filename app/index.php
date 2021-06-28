@@ -1,40 +1,78 @@
 <?php
-include_once __DIR__ . "/../vendor/autoload.php";
-
+error_reporting(-1);
+ini_set('display_errors', 1);
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Factory\AppFactory;
+use Slim\Routing\RouteCollectorProxy;
+use Slim\Routing\RouteContext;
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
+require __DIR__ . '/AccesoDatos/accesoDatos.php';
+require __DIR__ . '/entidades/usuario.php';
+require __DIR__ . '/entidades/producto.php';
+require __DIR__ . '/controllers/usuarioController.php';
+require __DIR__ . '/controllers/productoController.php';
+//crear un objeto
 $app = AppFactory::create();
 
+//interceptar paquetes entrantes
 $app->addErrorMiddleware(true,true,true);
 
-//con un solo parametros Ej: localhost:666/hola
-$app->get('/usuario/{nombre}[/]', function (Request $request, Response $response, array $args) {
-    $nombre= $args['nombre'];//[/] es opcional
-    $response->getBody()->write("Hello, $nombre");
-    return $response;
-});
-//con dos parametros Ej: localhost:666/hola/algo
-$app->get('/hola/{nombre}/{apellido}', function (Request $request, Response $response, array $args) {
-    $nombre = $args['nombre'];
-    $apellido = $args['apellido'];
-    $response->getBody()->write("Hello, $nombre.$apellido");
-    return $response;
-});
-//corre desde app
-$app->get('/app/[/]', function (Request $request, Response $response, array $args) {
-    $response->getBody()->write("Usa el ruteo correctamente");
+//Enable CORS
+$app->add(function (Request $request, RequestHandlerInterface $handler): Response {
+  //  $routeContext = RouteContext::fromRequest($request);
+    //$routingResults = $routeContext->getRoutingResults();
+    //$methods = $routingResults->getAllowedMethods();
+
+    $response = $handler->handle($request);
+
+    $requestHeaders = $request->getHeaderLine('Access-Control-Request-Headers');
+
+    $response = $response->withHeader('Access-Control-Allow-Origin', '*');
+    $response = $response->withHeader('Access-Control-Allow-Methods', 'get,post');
+    $response = $response->withHeader('Access-Control-Allow-Headers', $requestHeaders);
+    
+    $response = $response->withHeader('Access-Control-Allow-Credentials', 'true');
+    
+     return $response;
+    });
+
+    //corre desde localhost:666
+$app->get('[/]', function (Request $request, Response $response, array $args) {
+    $response->getBody()->write("BIENVENIDO");
     return $response;
 });
 //corre desde localhost:666
-$app->get('[/]', function (Request $request, Response $response, array $args) {
+$app->post('[/]', function (Request $request, Response $response, array $args) {
     $response->getBody()->write("Bienvenido al Slim");
     return $response;
 });
+
+$app->post('/hello/{name}', function (Request $request, Response $response, array $args) {
+    $name = $args['name'];
+    $response->getBody()->write("Hello, $name");
+    return $response;
+});
+    
+$app->group('/Usuario', function(RouteCollectorProxy $group){
+    $group->post('[/]', \usuarioController::class .':Login');
+    $group->post('[/]', \usuarioController::class .':RetornarUsuaio');
+    $group->post('[/]', \usuarioController::class .':CrearUsuaio');
+   // $group->post('[/]', \usuarioController::class . ':ModificarUsuario');
+   // $group->get('[/]', \usuarioController::class . ':ListarUsuario');
+});
+
+/*
+$app->$group('/Producto', function (RouteCollectorProxy $group){
+    $group->get('/Producto/{productoId}[/]', \productoController::class .':ListarProducto');
+    $group->get('/imagen/{productoId}[/]', \productoController::class .':RetornarImagen');
+
+});
+*/
 
 $app->run();//corre como app
 

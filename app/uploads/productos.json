@@ -1,0 +1,22 @@
+{ 
+"productos":[
+    {
+        "nombre":"producto1",
+        "id":"1"
+    },
+    {
+        "nombre":"producto2",
+        "id":"2"  
+    }
+],
+"categorias":[
+    {
+        "nombre":"verano",
+        "id":"1"
+    },
+    {
+        "nombre":"invierno",
+        "id":"2"
+    }
+]
+}
