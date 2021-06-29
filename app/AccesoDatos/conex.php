@@ -1,5 +1,6 @@
 <?php
 //include('conexion.php');
+/*
 $usuario="root";
 $pass="cr7carplove2911.";
 
@@ -34,6 +35,6 @@ if($fila){
 }
 //mysqli_free_result($resultado);
 //mysqli_close();
-
+*/
 
 ?>

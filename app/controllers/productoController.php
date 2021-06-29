@@ -3,14 +3,14 @@
 class ProductoController{
 
 public function RetornarProductos($request, $response, $args){
-/*
+
     $listaProd =  json_decode(Archivos::leerArchivo('uploads/productos.json'));
         
     $arrayProd = array();
     //recorro los objetos de la lista
     foreach ($listaProd as  $objStandar) {
         //recorro los valores del objeto
-        $tempProd = new Provincia();
+        $tempProd = new Producto();
         foreach ($objStandar as $atr => $valueAtr) {
             $tempProd->{$atr} = $valueAtr;
         }
@@ -18,7 +18,6 @@ public function RetornarProductos($request, $response, $args){
         
     }
     
-   */
   $arratProductos = producto::obtenerTodos();
  $response->getBody()->Write(json_encode($arratProductos));
    $response->getBody()->Write("productos...");

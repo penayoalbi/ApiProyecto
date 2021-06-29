@@ -1,4 +1,5 @@
 <?php
+/*
 include('accesoDatos.php');
 
 $usuario=$_POST["txtUsuario"];
@@ -20,6 +21,6 @@ if($row['@f']!= null){
     echo "1";
 }
 
-
+*/
 
 ?>

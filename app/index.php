@@ -24,9 +24,9 @@ $app->addErrorMiddleware(true,true,true);
 
 //Enable CORS
 $app->add(function (Request $request, RequestHandlerInterface $handler): Response {
-  //  $routeContext = RouteContext::fromRequest($request);
-    //$routingResults = $routeContext->getRoutingResults();
-    //$methods = $routingResults->getAllowedMethods();
+   // $routeContext = RouteContext::fromRequest($request);
+   // $routingResults = $routeContext->getRoutingResults();
+   // $methods = $routingResults->getAllowedMethods();
 
     $response = $handler->handle($request);
 
@@ -42,12 +42,12 @@ $app->add(function (Request $request, RequestHandlerInterface $handler): Respons
     });
 
     //corre desde localhost:666
-$app->get('[/]', function (Request $request, Response $response, array $args) {
+$app->get('hello[/]', function (Request $request, Response $response, array $args) {
     $response->getBody()->write("BIENVENIDO");
     return $response;
 });
 //corre desde localhost:666
-$app->post('[/]', function (Request $request, Response $response, array $args) {
+$app->post('hello[/]', function (Request $request, Response $response, array $args) {
     $response->getBody()->write("Bienvenido al Slim");
     return $response;
 });
@@ -64,15 +64,18 @@ $app->group('/Usuario', function(RouteCollectorProxy $group){
     $group->post('[/]', \usuarioController::class .':CrearUsuaio');
    // $group->post('[/]', \usuarioController::class . ':ModificarUsuario');
    // $group->get('[/]', \usuarioController::class . ':ListarUsuario');
+   
+});
+//$group->post('[/]', \usuarioController::class . ':LeerJSONPost' );
+
+
+$app->group('/Producto',function (RouteCollectorProxy $group){
+    $group->get('/{idProd}[/]', \productoController::class .':RetornarProducto');
+    $group->post('/{idProd}[/]', \productoController::class .':ListarProducto');
+    $group->get('/imagen/{idProd}[/]', \productoController::class .':RetornarImagen');
+
 });
 
-/*
-$app->$group('/Producto', function (RouteCollectorProxy $group){
-    $group->get('/Producto/{productoId}[/]', \productoController::class .':ListarProducto');
-    $group->get('/imagen/{productoId}[/]', \productoController::class .':RetornarImagen');
-
-});
-*/
 
 $app->run();//corre como app
 

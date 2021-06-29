@@ -1,20 +1,17 @@
 <?php
 echo"acceso a datos";
-
     class accesoDatos
     {
         private static $objAcceso;
         private $objetoPDO;
         private function __construct(){
-          try{
-              
-             //$this->objetoPDO = new PDO("mysql:host=localhost","mitienda","root","cr7carplove2911.");
+          try{  
                $this->objetoPDO = new PDO('mysql:host=localhost;dbname=mitienda;user=root;password=cr7carplove2911.'); 
-               $this->objetoPDO = exec("SET CHARACTER SET utf8"); 
+               $this->objetoPDO = exec("set names utf8"); 
                
-                
+                return $objetoPDO;
             }catch(PDOException $e){
-                 print "ERROR".$e->getMessage();
+                 print "ERROR:".$e->getMessage();
                 die();
             }
             
@@ -30,7 +27,6 @@ echo"acceso a datos";
     
         public function prepararConsulta($sql)
         {
-
             return $this->objetoPDO->prepare($sql);
         }
 

@@ -3,12 +3,13 @@
 class Usuario
 {
     public $nombre;
+    public $correo;
     public $pass;
 
     public function __Construct()
     {
-       
-        $this->nombre="$_POST[txtUsuario]";
+        $this->nombre="$_POST[txtNombre]";
+        $this->correo="$_POST[txtCorreo]";
         $this->pass="$_POST[txtPass]";
     }
 
@@ -18,13 +19,20 @@ class Usuario
     public function getPass(){
         return $this->pass;
     }
-    public function setPass(){
-        $this->pass=$pass;
-
+    public function getCorreo(){
+        return $this->correo;
     }
-    public function setNombre(){
+    public function setNombre($pass){
         $this->nombre=$nombre;
     }
+    public function setCorreo($correo){
+         $this->correo=$correo;
+    }
+    public function setPass($pass){
+        $this->pass=$pass;
+    }
+   
+   
 
 
     /*
@@ -32,33 +40,32 @@ class Usuario
         return $this->valor;
     }
     */
-    public static function ListarUsuario()
+    public static function ListarUsuario($nombre)
     {
         $objAcceso = accesoDatos::obtenerInstancia();
-        $consulta = $objAcceso->prepararConsulta("SELECT * FROM usuarios");
-        $consulta->execute();
+        $consulta = $objAcceso->prepararConsulta("SELECT * FROM usuarios WHERE usuario = ? ");
+        $consulta->execute(array($nombre));
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'usuarios');
     }
 
-    public  function CrearUsuario($usuario)
+    public  function CrearUsuario($NuevoUsuario)
     {
         $objAcceso = accesoDatos::obtenerInstancia();
-        $consulta = $objAcceso->prepararConsulta("INSERT INTO usuarios VALUES (?,?)");
+        $consulta = $objAcceso->prepararConsulta("INSERT INTO usuarios VALUES (?,?,?)");
     
-        $consulta->execute(array($usuario->getNombre(),$usuario->getPass()));
+        $consulta->execute(array($usuario->getNombre(),$usuario->getCorreo(),$usuario->getPass()));
 
-        return $consulta->fetchAll(PDO::FETCH_CLASS, 'usuarios');
+       // return $consulta->fetchAll(PDO::FETCH_CLASS, 'usuarios');
     }
 
-    public function RetornarUsuario(){
+    public function RetornarUsuario($nombre){
         $objAcceso = accesoDatos::obtenerInstancia();
-        $consulta = $objAcceso->prepararConsulta("SELECT * FROM usuarios");
-        $consulta->execute();
+        $consulta = $objAcceso->prepararConsulta("SELECT nombre FROM usuarios WHERE nombre = ?");
+        $consulta->execute(array($nombre));
 
-        return $consulta->fetchAll(PDO::FETCH_CLASS, 'usuarios');
+        return $consulta->fetchAll();
     
-
     }
 
 }
