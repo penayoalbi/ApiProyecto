@@ -10,7 +10,6 @@ use Slim\Routing\RouteCollectorProxy;
 use Slim\Routing\RouteContext;
 
 require __DIR__ . '/../vendor/autoload.php';
-
 require __DIR__ . '/AccesoDatos/accesoDatos.php';
 require __DIR__ . '/entidades/usuario.php';
 require __DIR__ . '/entidades/producto.php';
@@ -21,15 +20,16 @@ $app = AppFactory::create();
 
 //interceptar paquetes entrantes
 $app->addErrorMiddleware(true,true,true);
+//$app->addRoutingMiddleware();
 
 //Enable CORS
 $app->add(function (Request $request, RequestHandlerInterface $handler): Response {
    // $routeContext = RouteContext::fromRequest($request);
    // $routingResults = $routeContext->getRoutingResults();
    // $methods = $routingResults->getAllowedMethods();
-
+   // echo "pase por aqui. ";
     $response = $handler->handle($request);
-
+   //var_dump($request);
     $requestHeaders = $request->getHeaderLine('Access-Control-Request-Headers');
 
     $response = $response->withHeader('Access-Control-Allow-Origin', '*');
@@ -39,43 +39,40 @@ $app->add(function (Request $request, RequestHandlerInterface $handler): Respons
     $response = $response->withHeader('Access-Control-Allow-Credentials', 'true');
     
      return $response;
-    });
-
-    //corre desde localhost:666
-$app->get('hello[/]', function (Request $request, Response $response, array $args) {
-    $response->getBody()->write("BIENVENIDO");
-    return $response;
 });
-//corre desde localhost:666
-$app->post('hello[/]', function (Request $request, Response $response, array $args) {
-    $response->getBody()->write("Bienvenido al Slim");
-    return $response;
-});
-
-$app->post('/hello/{name}', function (Request $request, Response $response, array $args) {
+$app->post('hola/{name}', function (Request $request, Response $response, array $args) {
     $name = $args['name'];
     $response->getBody()->write("Hello, $name");
     return $response;
 });
-    
-$app->group('/Usuario', function(RouteCollectorProxy $group){
-    $group->post('[/]', \usuarioController::class .':Login');
-    $group->post('[/]', \usuarioController::class .':RetornarUsuaio');
-    $group->post('[/]', \usuarioController::class .':CrearUsuaio');
+
+    //corre desde localhost:666
+$app->get('/hola[/]', function (Request $request, Response $response, array $args) {
+    $response->getBody()->write("lleguee!");
+    return $response;
+});
+//corre desde localhost:666
+$app->get('[/]', function (Request $request, Response $response, array $args) {
+    $response->getBody()->write("Bienvenido al Slim");
+    return $response;
+});
+
+$app->group('/usuario', function(RouteCollectorProxy $group){
+    $group->post('/id[/]', \usuarioController::class .':Login');
+    $group->get('[/]', \usuarioController::class .':ObtenerUsuario');
+  //  $group->post('/{nombre}', \usuarioController::class .':CrearUsuaio');
    // $group->post('[/]', \usuarioController::class . ':ModificarUsuario');
-   // $group->get('[/]', \usuarioController::class . ':ListarUsuario');
-   
-});
-//$group->post('[/]', \usuarioController::class . ':LeerJSONPost' );
-
-
-$app->group('/Producto',function (RouteCollectorProxy $group){
-    $group->get('/{idProd}[/]', \productoController::class .':RetornarProducto');
-    $group->post('/{idProd}[/]', \productoController::class .':ListarProducto');
-    $group->get('/imagen/{idProd}[/]', \productoController::class .':RetornarImagen');
-
+  //  $group->get('[/]', \usuarioController::class . ':ListarUsuario');
+    $group->post('[/]', \usuarioController::class . ':LeerJSONPost' );
 });
 
+
+$app->group('/producto',function (RouteCollectorProxy $group){
+    $group->post('[/]', \productoController::class .':RetornarProductos');
+    $group->get('[/]', \productoController::class .':ListarProducto');
+  //  $group->get('/imagen/{idProd}[/]', \productoController::class .':RetornarImagen');
+
+});
 
 $app->run();//corre como app
 

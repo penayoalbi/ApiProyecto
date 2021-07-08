@@ -3,7 +3,6 @@
 class ProductoController{
 
 public function RetornarProductos($request, $response, $args){
-
     $listaProd =  json_decode(Archivos::leerArchivo('uploads/productos.json'));
         
     $arrayProd = array();
@@ -18,12 +17,15 @@ public function RetornarProductos($request, $response, $args){
         
     }
     
-  $arratProductos = producto::obtenerTodos();
- $response->getBody()->Write(json_encode($arratProductos));
-   $response->getBody()->Write("productos...");
+    $arrayProductos = producto::obtenerTodos();
+    $response->getBody()->Write(json_encode($arrayProductos));
+    $response->getBody()->Write("productos...");
  
-
   return $response ->withHeader('Content-Type', 'application/json');;
+}
+public function ListarProducto($request, $response, $args){
+    $response->getBody()->Write("productos...");
+    return $response ->withHeader('Content-Type', 'application/json');;
 
 }
 
@@ -33,7 +35,7 @@ public function RetornarCategoria($request, $response, $args){
     
     $listaCat =  json_decode(Archivos::leerArchivo('uploads/Cat'.$idProducto.'.json'));
         
-    $arratProductos = array();
+    $arrayProductos = array();
     //recorro los objetos de la lista
     foreach ($listaCat as  $objStandar) {
         //recorro los valores del objeto
@@ -41,22 +43,19 @@ public function RetornarCategoria($request, $response, $args){
         foreach ($objStandar as $atr => $valueAtr) {
             $tempProd->{$atr} = $valueAtr;
         }
-        array_push($arratProductos,$tempProd);
-        
+        array_push($arrayProductos,$tempProd); 
     }
     
-  $response->getBody()->Write(json_encode($arratProductos));
+  $response->getBody()->Write(json_encode($arrayProductos));
 
   return $response;
-
 
 }
 public function RetornarPost($request, $response, $args){
     
     $valor =  $request->getParsedBody();
   //  var_dump($valor);
-    $response->getBody()->Write($valor['mensaje']);
-
+    $response->getBody()->Write($valor['retornar post']);
     return $response;
 }
 

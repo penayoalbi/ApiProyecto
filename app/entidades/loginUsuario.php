@@ -1,5 +1,5 @@
 <?php
-
+/*
  include('conexion.php');
 
  //$usuario = $_POST['txtusuario'];
@@ -15,7 +15,7 @@
  }else{
    echo "ERROR.";
  }
- 
+ */
 //realizar algo...
 
 ?>

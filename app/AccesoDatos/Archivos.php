@@ -13,7 +13,6 @@ class Archivos{
             $salida .= fgets($arch);
         }
         
-
         fclose($arch);
 
         return $salida ;

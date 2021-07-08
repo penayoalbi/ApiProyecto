@@ -31,10 +31,10 @@ class Producto{
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'productos');
     }
-
+///*WHERE nombre LIKE ''$buscar%"*/
     public function ListarProducto($nombre){
         $objAcceso = accesoDatos::obtenerInstancia();
-        $consulta = $objAcceso->prepararConsulta("SELECT * FROM productos WHERE nombre LIKE ''$buscar%");
+        $consulta = $objAcceso->prepararConsulta("SELECT * FROM productos");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'productos');

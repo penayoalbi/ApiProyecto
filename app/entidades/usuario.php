@@ -32,8 +32,6 @@ class Usuario
         $this->pass=$pass;
     }
    
-   
-
 
     /*
     public function MostrarValor(){
@@ -44,7 +42,7 @@ class Usuario
     {
         $objAcceso = accesoDatos::obtenerInstancia();
         $consulta = $objAcceso->prepararConsulta("SELECT * FROM usuarios WHERE usuario = ? ");
-        $consulta->execute(array($nombre));
+        $consulta->execute($nombre);
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'usuarios');
     }
@@ -53,20 +51,18 @@ class Usuario
     {
         $objAcceso = accesoDatos::obtenerInstancia();
         $consulta = $objAcceso->prepararConsulta("INSERT INTO usuarios VALUES (?,?,?)");
-    
-        $consulta->execute(array($usuario->getNombre(),$usuario->getCorreo(),$usuario->getPass()));
+        $consulta->execute(array($usuario->nombre,$usuario->correo,$usuario->pass));
+     //   $consulta->execute(array($usuario->getNombre(),$usuario->getCorreo(),$usuario->getPass()));
 
        // return $consulta->fetchAll(PDO::FETCH_CLASS, 'usuarios');
     }
 
-    public function RetornarUsuario($nombre){
-        $objAcceso = accesoDatos::obtenerInstancia();
-        $consulta = $objAcceso->prepararConsulta("SELECT nombre FROM usuarios WHERE nombre = ?");
-        $consulta->execute(array($nombre));
-
-        return $consulta->fetchAll();
-    
+    public static function RetornarUsuario($nombre){
+        $base = accesoDatos::obtenerInstancia();
+        $consulta = $base->prepararConsulta("SELECT * FROM usuarios WHERE nombre= '?'");
+       // $consulta->execute(array($nombre));
+       $consulta->execute($nombre);
+       return $consulta->fetchAll(PDO::FETCH_CLASS, 'usuarios');
     }
-
 }
 ?>
