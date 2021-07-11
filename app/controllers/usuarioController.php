@@ -3,65 +3,72 @@
 class usuarioController{
 
 public  function ObtenerUsuario($request, $response, $args){
-
-   // $user=  Usuario::RetornarUsuario();
-   // $user->nombre= "al";
-   // $user->correo = "al@mail.com";
-   // $user->pass= "pass";
+    $user=  Usuario::RetornarUsuario();
 
     $param1 = $request->getParsedBody();
-    $rs = Usuario ::RetornarUsuario($param1["nombre"]);
-   // $rs = in_array($param1['idUsuario'],$param2['id'],array_column('nombre'));
-
-    if($rs){
-        $response->getParseBody()->write("retornar");
-    }else{
+    $rs = Usuario ::RetornarUsuario($param1['nombre']);
+   // $rs = in_array($param1['nombre'],array_column($rs,'nombre'));
+   foreach($rs as $atr =>$valueAtr){
+    $user-> {$atr} = $valueAtr;
+   }
+    if($rs){ 
+      return  $response->getBody()->write(json_encode($rs));
+   }else{
         $response->getBody()->write("nou ");
     }
-
-   //$response->getBody()->Write(json_encode($user));
- $response->getBody()->Write("obtener usuario");
     return $response;
+   
 }
 
 public function CrearUsuario($request, $response, $args){
-    $listaDeParametros= $request->getParsedBody();
-    $nombre =$listaDeParametros['txtNombre'];
-    $correo = $listaDeParametros['txtCorreo'];
-    $pass = $listaDeParametros['txtPass'];
-    
-    $NuevoUsuario = new Usuario();
-    
-    $NuevoUsuario->setNombre($nombre);
-    $NuevoUsuario->setCorreo($correo);
-    $NuevoUsuario->setPass($$pass);
-
-    return $response->getBody()->whrite(json_encode($NuevoUsuario));
+    $listaDeParametros = $request->getParsedBody();
+   // if(isset($listaDeParametros)){
+    $NuevoUser = new Usuario();
+    $NuevoUser->setNombre($listaDeParametros['nombre']);
+    $NuevoUser->setCorreo($listaDeParametros['correo']);
+    $NuevoUser->setClave($listaDeParametros['clave']);
+    $NuevoUser->NuevoUsuario();
+    $response->getBody()->write( json_encode($NuevoUser));
+    return $response;
+   // }else{
+   //     return $response->getBody()->write('lista sin parametros');
+   // }
 
 }
 
 public function ModificarUsuario($request, $response,$args){
-
-    return $response->getBody()->whrite("modificar usuario");
+    return $response->getBody()->write("modificar usuario");
 }
 
 public function ListarUsuario($request, $response,$args){
-    return $response->getBody()->whrite("listar usuario");
+    return $response->getBody()->write("listar usuario");
 }
 
 /*public function validarAcceso(){
 
 }*/
 
-public function Login($request, $response,$args){
+public function Login($request, $response, $args){
   //  $valor = $args['nombre'];
-    $response->getBody()->white("Bienvenido a login");
-    return $response;
+    $buscar = $request->getParsedbody();
+    $user = Usuario::RetornarUsuario($buscar['nombre']);
+    if($user){
+        $response->getBody()->write("Bienvenido ");
+        return $response;
+    }else{
+        $response->getBody()->write("Usuario no registrado");
+        return $response;
+    }
+   // buscar= Usuario::RetornarUsuario($user);
+
+    
+   
 }
 
 public function LeerJSONPost($request, $response, $args){
     // parametro que llego por el ruteo
-     $valor =  $args['param'];
+   /*
+    $valor =  $args['nombre'];
    
     $response->getBody()->Write($valor);
     //objeto enviado via FormData
@@ -81,6 +88,7 @@ public function LeerJSONPost($request, $response, $args){
     $response->getBody()->Write(" hi ");
 
     return $response;
+    */
 }
 
 }

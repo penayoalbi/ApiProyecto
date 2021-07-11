@@ -5,14 +5,12 @@
         private static $objAcceso;
         private $objetoPDO;
         private function __construct(){
-          try{  
-          //  $this->objetoPDO = mysqli_connect("localhost","root","cr7carplove2911.","mitienda");
-            $this->objetoPDO = new PDO("mysql:host=localhost:3306;password=cr7carplove2911.;dbname=mitienda"); 
-            $this->objetoPDO = exec('SET CHARACTER SET utf8'); 
-          
-            return $objetoPDO;
-            }catch(PDOException $e){
-                 print "ERROR:".$e->getMessage();
+        try{  
+           // $this->objetoPDO = new PDO("mysql:host=127.0.0.1:3306;dbname='mitienda';user=root';password=''"); 
+            $this->objetoPDO = new PDO('mysql:host=remotemysql.com:3306;dbname=zFQadKUnRd;charset=utf8','zFQadKUnRd','Sq9i9kyGES',array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+            
+        }catch(PDOException $e){
+                print "ERROR: en bd".$e->getMessage();
                 die();
             }
         }
