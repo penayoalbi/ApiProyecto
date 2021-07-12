@@ -59,11 +59,12 @@ class Usuario
         return $consulta->fetchAll();
     }
 
-    public function RetornarUsuario($nombre){
+    public static function RetornarUsuario($nombre){
         $objetoPDO = accesoDatos::obtenerInstancia();
-        $consulta = $objetoPDO->prepararConsulta("SELECT nombre FROM usuarios WHERE = ?");
-        $consulta->execute();
-       return $consulta->fetchAll(PDO::FETCH_CLASS,'Usuario');
+        $consulta = $objetoPDO->prepararConsulta("SELECT nombre FROM usuarios  WHERE nombre =?");
+      //$consulta->execute();
+        $consulta->execute(array($nombre));
+        return $consulta->fetchAll(PDO::FETCH_CLASS,'Usuario');
     }
 }
 ?>

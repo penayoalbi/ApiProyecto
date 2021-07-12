@@ -60,7 +60,7 @@ $app->get('[/]', function (Request $request, Response $response, array $args) {
 
 $app->group('/usuario', function(RouteCollectorProxy $group){
     $group->post('/new[/]', \usuarioController::class .':CrearUsuario');
-   // $group->get('/login[/]', \usuarioController::class .':Login');
+    $group->get('/login[/]', \usuarioController::class .':Login');
    // $group->post('/{nombre}', \usuarioController::class .':ObtenerUsuario');
     $group->get('[/]', \usuarioController::class .':ObtenerUsuario');
    // $group->post('{valor}[/]', \usuarioController::class . ':LeerJSONPost' );

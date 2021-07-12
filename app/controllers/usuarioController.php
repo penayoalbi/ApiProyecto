@@ -7,7 +7,7 @@ public  function ObtenerUsuario($request, $response, $args){
 
     $param1 = $request->getParsedBody();
     $rs = Usuario ::RetornarUsuario($param1['nombre']);
-   // $rs = in_array($param1['nombre'],array_column($rs,'nombre'));
+  
    foreach($rs as $atr =>$valueAtr){
     $user-> {$atr} = $valueAtr;
    }
@@ -17,7 +17,6 @@ public  function ObtenerUsuario($request, $response, $args){
         $response->getBody()->write("nou ");
     }
     return $response;
-   
 }
 
 public function CrearUsuario($request, $response, $args){
@@ -33,7 +32,6 @@ public function CrearUsuario($request, $response, $args){
    // }else{
    //     return $response->getBody()->write('lista sin parametros');
    // }
-
 }
 
 public function ModificarUsuario($request, $response,$args){
@@ -49,21 +47,30 @@ public function ListarUsuario($request, $response,$args){
 }*/
 
 public function Login($request, $response, $args){
-  //  $valor = $args['nombre'];
-    $buscar = $request->getParsedbody();
-    $user = Usuario::RetornarUsuario($buscar['nombre']);
-    if($user){
-        $response->getBody()->write("Bienvenido ");
-        return $response;
-    }else{
-        $response->getBody()->write("Usuario no registrado");
-        return $response;
-    }
-   // buscar= Usuario::RetornarUsuario($user);
+  // $valor = $args['nombre'];
+    $param = $request->getParsedbody();
+    $rs= Usuario::RetornarUsuario($param['nombre']);
+    $login= new Usuario();
 
-    
-   
+    if(count($rs)==1){
+        foreach($rs as $item){
+            foreach( $item as $art => $valueAtr){
+                    $login->{$atr} = $valueAtr;
+                } 
+        }
+        if($login==$param['nombre']){
+            $response->getBody()->Write("Bienvenido");
+        }else{
+            $response->getBody()->Write("No se encontraron coincidencia");
+        }
+       // return $response->getBody()->write(json_encode($login));
+    }else{
+        $response->getBody()->Write("Usuario incorrecto");
+    }
+    //return $response->getBody()->write(json_encode($rs));
+    return $response;
 }
+
 
 public function LeerJSONPost($request, $response, $args){
     // parametro que llego por el ruteo
