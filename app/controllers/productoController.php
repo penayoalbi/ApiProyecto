@@ -7,10 +7,10 @@ public function CrearProductos($request, $response, $args){
 
     $nuevoProducto = new Producto();
     $nuevoProducto->setNombre($listaDeParametros['nombre']);
-    $nuevoProducto->setDesc($listaDeParametros['descripcion']);
-    $nuevoProducto->CrearProductos();
-
-    $response->getBody().write(json_encode($nuevoProducto));
+    $nuevoProducto->setDescripcion($listaDeParametros['descripcion']);
+    $nuevoProducto->CrearProducto();
+   
+    $response->getBody()->write(json_encode($nuevoProducto));
     return $response;
 
 }
@@ -18,7 +18,6 @@ public function ListarProductos($request, $response, $args){
     $ObjetoProvenienteDelFront = $request->getParsedBody();
     $rs=new Producto();
     $rs= Producto::ListarProducto($ObjetoProvenienteDelFront['buscar']);
-
     //$rs->ListarProducto();
     $response->getBody()->write(json_encode($rs));
    // $response->getBody()->Write("productos...");
@@ -27,9 +26,9 @@ public function ListarProductos($request, $response, $args){
 }
 public function BorrarProducto($request, $response, $args){
     $aborrar=$args['idproducto'];
+    Producto::borrar($aborrar);
     $response->getBody().write('borrar producto');
     return $response;
-
 }
 /*
 public function RetornarProductos($request, $response, $args){

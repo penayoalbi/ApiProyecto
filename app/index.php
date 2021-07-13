@@ -72,9 +72,10 @@ $app->group('/usuario', function(RouteCollectorProxy $group){
 
 $app->group('/producto',function (RouteCollectorProxy $groupProducto){
     $groupProducto->post('[/]', \productoController::class .':ListarProductos');
+    $groupProducto->post('/new[/]', \productoController::class .':CrearProductos');
     $groupProducto->get('[/]', \productoController::class .':ListarProductos');
    //$group->get('/imagen/{idProd}[/]', \productoController::class .':RetornarImagen');
-    $group->delete('/{idproducto}', \usuarioController::class . ':BorrarProducto');
+    $groupProducto->delete('/{idproducto}', \usuarioController::class . ':BorrarProducto');
 });
 
 $app->run();//corre como app
