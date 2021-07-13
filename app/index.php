@@ -66,7 +66,7 @@ $app->group('/usuario', function(RouteCollectorProxy $group){
    // $group->post('{valor}[/]', \usuarioController::class . ':LeerJSONPost' );
    // $group->put('/{id}[/]', \usuarioController::class . ':ModificarUsuario');
   //  $group->get('[/]', \usuarioController::class . ':ListarUsuario');
-  //  $group->delete('/borrar', \usuarioController::class . ':BorrarUsuarios');
+  //  $group->delete('[/]{idproducto}', \usuarioController::class . ':BorrarUsuarios');
    
 });
 

@@ -4,7 +4,6 @@ class usuarioController{
 
 public  function ObtenerUsuario($request, $response, $args){
     $user=  Usuario::RetornarUsuario();
-
     $param1 = $request->getParsedBody();
     $rs = Usuario ::RetornarUsuario($param1['nombre']);
   
@@ -55,8 +54,8 @@ public function Login($request, $response, $args){
     if(count($rs)==1){
         foreach($rs as $item){
             foreach( $item as $art => $valueAtr){
-                    $login->{$atr} = $valueAtr;
-                } 
+                $login->{$atr} = $valueAtr;
+            } 
         }
         if($login==$param['nombre']){
             $response->getBody()->Write("Bienvenido");

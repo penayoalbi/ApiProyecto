@@ -8,10 +8,6 @@ class Usuario
 
     public function __Construct()
     {/*
-        $this->nombre=getParam('nombre');
-        $this->correo=getParam('correo');
-        $this->clave=getParam('clave');
-        
         $this->nombre="$_POST[nombre]";
         $this->correo="$_POST[correo]";
         $this->clave="$_POST[clave]";
@@ -51,7 +47,7 @@ class Usuario
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
     }
 
-    public function NuevoUsuario(){//crear nuevos usuarios
+    public function NuevoUsuario(){//crear usuario
         $objAcceso = accesoDatos::obtenerInstancia();
         $consulta = $objAcceso->prepararConsulta("INSERT INTO usuarios(nombre, correo, clave) VALUES (?,?,?)");
         $consulta->execute(array($this->nombre,$this->correo,$this->clave));

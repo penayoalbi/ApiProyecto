@@ -2,9 +2,25 @@
 
 class ProductoController{
 
+public function CrearProductos($request, $response, $args){
+    $listaDeParametros = $request->getParsedBody();
+
+    $nuevoProducto = new Producto();
+    $nuevoProducto->setNombre($listaDeParametros['nombre']);
+    $nuevoProducto->setDesc($listaDeParametros['descripcion']);
+    $nuevoProducto->CrearProductos();
+
+    $response->getBody().write(json_encode($nuevoProducto));
+    return $response;
+
+}
+public function ListarProducto($request, $response, $args){
+    $response->getBody()->Write("productos...");
+    return $response ->withHeader('Content-Type', 'application/json');;
+}
+
 public function RetornarProductos($request, $response, $args){
-    $listaProd =  json_decode(Archivos::leerArchivo('uploads/productos.json'));
-        
+    $listaProd =  json_decode(Archivos::leerArchivo('uploads/productos.json'));    
     $arrayProd = array();
     //recorro los objetos de la lista
     foreach ($listaProd as  $objStandar) {
@@ -13,22 +29,15 @@ public function RetornarProductos($request, $response, $args){
         foreach ($objStandar as $atr => $valueAtr) {
             $tempProd->{$atr} = $valueAtr;
         }
-        array_push($arrayProd,$tempProd);
-        
+        array_push($arrayProd,$tempProd);  
     }
     
-    $arrayProductos = producto::obtenerTodos();
-    $response->getBody()->Write(json_encode($arrayProductos));
-    $response->getBody()->Write("productos...");
- 
-  return $response ->withHeader('Content-Type', 'application/json');;
-}
-public function ListarProducto($request, $response, $args){
-    $response->getBody()->Write("productos...");
+    $arrayProductos = Producto::obtenerTodos();
+    $response->getBody()->write(json_encode($arrayProductos));
     return $response ->withHeader('Content-Type', 'application/json');;
-
 }
 
+/*
 public function RetornarCategoria($request, $response, $args){
     
     $productoId = $args['idProducto'];
@@ -50,9 +59,9 @@ public function RetornarCategoria($request, $response, $args){
 
   return $response;
 
-}
+}*/
+
 public function RetornarPost($request, $response, $args){
-    
     $valor =  $request->getParsedBody();
   //  var_dump($valor);
     $response->getBody()->Write($valor['retornar post']);
@@ -77,17 +86,14 @@ public function LeerJSONPost($request, $response, $args){
             $MiUsuario->{$atr} = $valueAtr;
         }
         $retorno =  $MiUsuario->CrearUsuario();
-   
         */
-   
-
     $response->getBody()->Write(json_encode($ObjetoProvenienteDelFront));
 
     return $response;
 }
 /*
 public function RetornarImagen($request, $response, $args){
-    $valorImagen = $args['productoId'];
+    $valorImagen = $args['idproducto'];
     $imagen = "";    
 
     switch ($valorImagen) {
@@ -117,7 +123,6 @@ public function RetornarImagen($request, $response, $args){
     $response->getBody()->Write($imagen);
 
     return $response;
-
 
 }*/
 

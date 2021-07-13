@@ -9,8 +9,6 @@
 
 //back
 crearRegistro();
-
-
 /*archivos txt
     $arch = fopen('registro.txt','w');
 
