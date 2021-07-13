@@ -25,9 +25,10 @@ public function ListarProductos($request, $response, $args){
    // return $response ->withHeader('Content-Type', 'application/json');;
 }
 public function BorrarProducto($request, $response, $args){
-    $aborrar=$args['idproducto'];
-    Producto::borrar($aborrar);
-    $response->getBody().write('borrar producto');
+    $aborrar = $request->getParsedBdy();
+    //$aborrar = $args['idproducto'];
+    Producto::Borrar($aborrar['idproducto']);
+    $response->getBody()->write('borrar producto');
     return $response;
 }
 /*
@@ -131,7 +132,6 @@ public function RetornarImagen($request, $response, $args){
     $response->getBody()->Write($imagen);
 
     return $response;
-
 }*/
 
 }

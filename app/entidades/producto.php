@@ -43,11 +43,10 @@ class Producto{
 // "DELETE FROM `productos` WHERE `productos`.`idproducto` = 3"
     public static function Borrar($idproducto){ 
         $objAcceso = accesoDatos::obtenerInstancia();
-        $consulta = $objAcceso->prepararConsulta("DELETE  FROM productos WHERE idproducto = ? ");
+        $consulta = $objAcceso->prepararConsulta("DELETE  FROM productos WHERE idproducto= ?");
         //$consulta->execute(array($this->nombre));
-        $consulta->execute(array($idproducto));
-        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
-
+        $consulta->execute($idproducto);
+        //return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
     }
     
 }
