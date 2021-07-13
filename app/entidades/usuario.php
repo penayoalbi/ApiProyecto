@@ -57,7 +57,7 @@ class Usuario
 
     public static function RetornarUsuario($nombre){
         $objetoPDO = accesoDatos::obtenerInstancia();
-        $consulta = $objetoPDO->prepararConsulta("SELECT nombre FROM usuarios  WHERE nombre =?");
+        $consulta = $objetoPDO->prepararConsulta("SELECT * FROM usuarios  WHERE nombre =?");
       //$consulta->execute();
         $consulta->execute(array($nombre));
         return $consulta->fetchAll(PDO::FETCH_CLASS,'Usuario');

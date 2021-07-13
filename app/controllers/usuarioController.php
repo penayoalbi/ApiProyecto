@@ -57,7 +57,7 @@ public function Login($request, $response, $args){
                 $login->{$atr} = $valueAtr;
             } 
         }
-        if($login==$param['nombre']){
+        if($login->$param['nombre']){
             $response->getBody()->Write("Bienvenido");
         }else{
             $response->getBody()->Write("No se encontraron coincidencia");
@@ -66,7 +66,7 @@ public function Login($request, $response, $args){
     }else{
         $response->getBody()->Write("Usuario incorrecto");
     }
-    //return $response->getBody()->write(json_encode($rs));
+   // return $response->getBody()->write(json_encode($rs));
     return $response;
 }
 

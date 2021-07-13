@@ -61,21 +61,20 @@ $app->get('[/]', function (Request $request, Response $response, array $args) {
 $app->group('/usuario', function(RouteCollectorProxy $group){
     $group->post('/new[/]', \usuarioController::class .':CrearUsuario');
     $group->get('/login[/]', \usuarioController::class .':Login');
-   // $group->post('/{nombre}', \usuarioController::class .':ObtenerUsuario');
     $group->get('[/]', \usuarioController::class .':ObtenerUsuario');
+    // $group->post('/{nombre}', \usuarioController::class .':ObtenerUsuario');
    // $group->post('{valor}[/]', \usuarioController::class . ':LeerJSONPost' );
    // $group->put('/{id}[/]', \usuarioController::class . ':ModificarUsuario');
   //  $group->get('[/]', \usuarioController::class . ':ListarUsuario');
-  //  $group->delete('[/]{idproducto}', \usuarioController::class . ':BorrarUsuarios');
+  
    
 });
 
-
 $app->group('/producto',function (RouteCollectorProxy $groupProducto){
-    $groupProducto->post('/id', \productoController::class .':RetornarProductos');
-    $groupProducto->get('[/]', \productoController::class .':ListarProducto');
-  //  $group->get('/imagen/{idProd}[/]', \productoController::class .':RetornarImagen');
-
+    $groupProducto->post('[/]', \productoController::class .':ListarProductos');
+    $groupProducto->get('[/]', \productoController::class .':ListarProductos');
+   //$group->get('/imagen/{idProd}[/]', \productoController::class .':RetornarImagen');
+    $group->delete('/{idproducto}', \usuarioController::class . ':BorrarProducto');
 });
 
 $app->run();//corre como app

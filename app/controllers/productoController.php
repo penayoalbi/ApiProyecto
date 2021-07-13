@@ -14,11 +14,24 @@ public function CrearProductos($request, $response, $args){
     return $response;
 
 }
-public function ListarProducto($request, $response, $args){
-    $response->getBody()->Write("productos...");
-    return $response ->withHeader('Content-Type', 'application/json');;
-}
+public function ListarProductos($request, $response, $args){
+    $ObjetoProvenienteDelFront = $request->getParsedBody();
+    $rs=new Producto();
+    $rs= Producto::ListarProducto($ObjetoProvenienteDelFront['buscar']);
 
+    //$rs->ListarProducto();
+    $response->getBody()->write(json_encode($rs));
+   // $response->getBody()->Write("productos...");
+    return $response;
+   // return $response ->withHeader('Content-Type', 'application/json');;
+}
+public function BorrarProducto($request, $response, $args){
+    $aborrar=$args['idproducto'];
+    $response->getBody().write('borrar producto');
+    return $response;
+
+}
+/*
 public function RetornarProductos($request, $response, $args){
     $listaProd =  json_decode(Archivos::leerArchivo('uploads/productos.json'));    
     $arrayProd = array();
@@ -31,11 +44,10 @@ public function RetornarProductos($request, $response, $args){
         }
         array_push($arrayProd,$tempProd);  
     }
-    
     $arrayProductos = Producto::obtenerTodos();
     $response->getBody()->write(json_encode($arrayProductos));
     return $response ->withHeader('Content-Type', 'application/json');;
-}
+}*/
 
 /*
 public function RetornarCategoria($request, $response, $args){
@@ -63,7 +75,6 @@ public function RetornarCategoria($request, $response, $args){
 
 public function RetornarPost($request, $response, $args){
     $valor =  $request->getParsedBody();
-  //  var_dump($valor);
     $response->getBody()->Write($valor['retornar post']);
     return $response;
 }
@@ -71,7 +82,6 @@ public function RetornarPost($request, $response, $args){
 public function LeerJSONPost($request, $response, $args){
     // parametro que llego por el ruteo
      $valor =  $args['param'];
-   
     //$response->getBody()->Write($valor);
     //objeto enviado via FormData
      //$listaDeParametros = $request->getParsedBody();
@@ -88,7 +98,6 @@ public function LeerJSONPost($request, $response, $args){
         $retorno =  $MiUsuario->CrearUsuario();
         */
     $response->getBody()->Write(json_encode($ObjetoProvenienteDelFront));
-
     return $response;
 }
 /*
