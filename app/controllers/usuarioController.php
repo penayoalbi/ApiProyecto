@@ -89,7 +89,6 @@ public function LeerJSONPost($request, $response, $args){
         foreach ($ObjetoProvenienteDelFront as $atr => $valueAtr) {
             $MiUsuario->{$atr} = $valueAtr;
         }
-
     $response->getBody()->Write(" hi ");
 
     return $response;
