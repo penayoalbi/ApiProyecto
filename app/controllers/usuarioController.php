@@ -4,8 +4,8 @@ class usuarioController{
 
 public  function ObtenerUsuario($request, $response, $args){
     $user=  Usuario::RetornarUsuario();
-    $param1 = $request->getParsedBody();
-    $rs = Usuario ::RetornarUsuario($param1['nombre']);
+    $param = $request->getParsedBody();
+    $rs = Usuario ::RetornarUsuario($param['nombre']);
   
    foreach($rs as $atr =>$valueAtr){
     $user-> {$atr} = $valueAtr;
@@ -47,10 +47,11 @@ public function ListarUsuario($request, $response,$args){
 
 public function Login($request, $response, $args){
   // $valor = $args['nombre'];
-    $param = $request->getParsedbody();
+    $param = $request->getParsedBody();
+   // var_dump($param);
     $rs= Usuario::RetornarUsuario($param['nombre']);
     $login= new Usuario();
-
+//no anda
     if(count($rs)==1){
         foreach($rs as $item){
             foreach( $item as $art => $valueAtr){
@@ -62,14 +63,12 @@ public function Login($request, $response, $args){
         }else{
             $response->getBody()->Write("No se encontraron coincidencia");
         }
-       // return $response->getBody()->write(json_encode($login));
     }else{
         $response->getBody()->Write("Usuario incorrecto");
     }
-   // return $response->getBody()->write(json_encode($rs));
+  // return $response->getBody()->write(json_encode($rs));
     return $response;
 }
-
 
 public function LeerJSONPost($request, $response, $args){
     // parametro que llego por el ruteo

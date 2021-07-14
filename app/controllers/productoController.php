@@ -18,18 +18,21 @@ public function ListarProductos($request, $response, $args){
     $ObjetoProvenienteDelFront = $request->getParsedBody();
     $rs=new Producto();
     $rs= Producto::ListarProducto($ObjetoProvenienteDelFront['buscar']);
-    //$rs->ListarProducto();
     $response->getBody()->write(json_encode($rs));
    // $response->getBody()->Write("productos...");
     return $response;
    // return $response ->withHeader('Content-Type', 'application/json');;
 }
 public function BorrarProducto($request, $response, $args){
-    $aborrar = $request->getParsedBdy();
+    $aborrar = $request->getParsedBody();
     //$aborrar = $args['idproducto'];
     Producto::Borrar($aborrar['idproducto']);
     $response->getBody()->write('borrar producto');
     return $response;
+}
+
+public function ModificarProductos($request, $response,$args){
+    return $response->getBody()->write("modificar Productos");
 }
 /*
 public function RetornarProductos($request, $response, $args){
@@ -47,30 +50,6 @@ public function RetornarProductos($request, $response, $args){
     $arrayProductos = Producto::obtenerTodos();
     $response->getBody()->write(json_encode($arrayProductos));
     return $response ->withHeader('Content-Type', 'application/json');;
-}*/
-
-/*
-public function RetornarCategoria($request, $response, $args){
-    
-    $productoId = $args['idProducto'];
-    
-    $listaCat =  json_decode(Archivos::leerArchivo('uploads/Cat'.$idProducto.'.json'));
-        
-    $arrayProductos = array();
-    //recorro los objetos de la lista
-    foreach ($listaCat as  $objStandar) {
-        //recorro los valores del objeto
-        $tempProd = new Producto();
-        foreach ($objStandar as $atr => $valueAtr) {
-            $tempProd->{$atr} = $valueAtr;
-        }
-        array_push($arrayProductos,$tempProd); 
-    }
-    
-  $response->getBody()->Write(json_encode($arrayProductos));
-
-  return $response;
-
 }*/
 
 public function RetornarPost($request, $response, $args){
@@ -125,8 +104,7 @@ public function RetornarImagen($request, $response, $args){
                     
         default:
             $imagen =  "/Img/404.jpg";
-            break;
-                    
+            break;          
         }
 
     $response->getBody()->Write($imagen);
