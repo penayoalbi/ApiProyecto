@@ -20,15 +20,26 @@ public function CrearUsuario($request, $response, $args){
 public function Login($request, $response, $args){
     $param = $request->getParsedBody();
     $rs= Usuario::RetornarUsuario($param['nombre']);
-   // var_dump($param);
     $user=in_array($param['nombre'], array_column($rs,'nombre'));
-    //$user = array_uintersect_assoc( $param,$rs,"strcasecmp");
+   // var_dump($param);
     if($user){
+    $pass = in_array($param['clave'],array_column($rs,'clave'));
+    if($pass){
+        $response->getBody()->write("Bienvenido");
+    }else{
+        $response->getBody()->write("pass no valido");
+    }
+   }else{
+    $response->getBody()->write("Usuario no registrado");
+   }
+    //$user = array_uintersect_assoc( $param,$rs,"strcasecmp");
+  /*  if($user){
         $response->getBody()->write("Bienvenido");
     }else{
         $response->getBody()->write("Usuario no registrado");
     } 
-    //$response->getBody()->write(json_encode($param));
+    $response->getBody()->write(json_encode($param));*/
+
     return $response;
 }
 
@@ -42,14 +53,14 @@ public function BorrarUsuario($request, $response, $args){
 
 public  function ObtenerUsuario($request, $response, $args){
     //  $user=  Usuario::RetornarUsuario();
-      $param = $request->getParsedBody();
-      $rs = Usuario ::RetornarUsuario($param['nombre']);
-      if($rs){ 
-         $response->getBody()->write(json_encode($rs));
-        }else{
-          $response->getBody()->write("nou ");
-      }
-      return $response;
+    $param = $request->getParsedBody();
+    $rs = Usuario ::RetornarUsuario($param['nombre']);
+    if($rs){ 
+        $response->getBody()->write(json_encode($rs));
+    }else{
+        $response->getBody()->write("nou ");
+    }
+    return $response;
 }
 
 public function ModificarUsuario($request, $response,$args){
