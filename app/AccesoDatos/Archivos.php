@@ -2,7 +2,6 @@
 
 class Archivos{
 
-   
     public static function leerArchivo($nombre){
         //r
         $salida ="";
