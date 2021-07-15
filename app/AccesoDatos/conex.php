@@ -2,7 +2,7 @@
 //include('conexion.php');
 /*
 $usuario="root";
-$pass="cr7carplove2911.";
+$pass=".";
 
 $con="mysql:host=127.0.0.1;dbname=mitienda";
 //session_start();

@@ -24,14 +24,14 @@ public function ListarProductos($request, $response, $args){
    // return $response ->withHeader('Content-Type', 'application/json');;
 }
 public function BorrarProducto($request, $response, $args){
-    $aborrar = $request->getParsedBody();
+    $aborrar = $request->getAttribute('idproducto');
     //$aborrar = $args['idproducto'];
-    Producto::Borrar($aborrar['idproducto']);
-    $response->getBody()->write('borrar producto');
+    Producto::Borrar($aborrar);
+    $response->getBody()->write('se borro id: '.$aborrar);
     return $response;
 }
 
-public function ModificarProductos($request, $response,$args){
+public function ModificarProductos($request, $response, $args){
     return $response->getBody()->write("modificar Productos");
 }
 /*

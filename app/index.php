@@ -45,13 +45,8 @@ $app->post('hola/{name}', function (Request $request, Response $response, array 
     $response->getBody()->write("Hello, $name");
     return $response;
 });
-  //corre desde localhost:666
-$app->get('/hola[/]', function (Request $request, Response $response, array $args) {
-    $response->getBody()->write("lleguee!");
-    return $response;
-});
 //corre desde localhost:666
-$app->get('[/]', function (Request $request, Response $response, array $args) {
+$app->get('/hola[/]', function (Request $request, Response $response, array $args) {
     $response->getBody()->write("Bienvenido al Slim");
     return $response;
 });
@@ -59,18 +54,17 @@ $app->get('[/]', function (Request $request, Response $response, array $args) {
 
 $app->group('/usuario', function(RouteCollectorProxy $group){
     $group->post('/new[/]', \usuarioController::class .':CrearUsuario');
-    $group->get('/login[/]', \usuarioController::class .':Login');
-    $group->get('[/]', \usuarioController::class .':ObtenerUsuario');
-   // $group->post('{valor}[/]', \usuarioController::class . ':LeerJSONPost' );
-   // $group->put('/{id}[/]', \usuarioController::class . ':ModificarUsuario');
-  //  $group->get('[/]', \usuarioController::class . ':ListarUsuario');
-   
+    $group->post('/login', \usuarioController::class .':Login');
+    $group->delete('/borrar/{id}', \usuarioController::class .':BorrarUsuario');
+   //$group->put('/{id}[/]', \usuarioController::class . ':ModificarUsuario');
+    $group->get('[/]', \usuarioController::class . ':ListarUsuario');
+    //$group->get('[/]', \usuarioController::class .':ObtenerUsuario');
 });
 
 $app->group('/producto',function (RouteCollectorProxy $groupProducto){
     $groupProducto->post('[/]', \productoController::class .':CrearProductos');
     $groupProducto->get('[/]', \productoController::class .':ListarProductos');
-    $groupProducto->delete('/borrar/{idproducto}', \productoController::class . ':BorrarProducto');
+    $groupProducto->delete('/borrar/{idproducto}', \productoController::class .':BorrarProducto');
     //$groupProducto->put('[/]', \productoController::class .':ModificarProductos');
    // $groupProducto->get('[/]', \productoController::class .':ListarProductos');
    //$group->get('/imagen/{idProd}[/]', \productoController::class .':RetornarImagen');

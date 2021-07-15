@@ -2,22 +2,6 @@
 
 class usuarioController{
 
-public  function ObtenerUsuario($request, $response, $args){
-    $user=  Usuario::RetornarUsuario();
-    $param = $request->getParsedBody();
-    $rs = Usuario ::RetornarUsuario($param['nombre']);
-  
-   foreach($rs as $atr =>$valueAtr){
-    $user-> {$atr} = $valueAtr;
-   }
-    if($rs){ 
-      return  $response->getBody()->write(json_encode($rs));
-   }else{
-        $response->getBody()->write("nou ");
-    }
-    return $response;
-}
-
 public function CrearUsuario($request, $response, $args){
     $listaDeParametros = $request->getParsedBody();
    // if(isset($listaDeParametros)){
@@ -33,43 +17,54 @@ public function CrearUsuario($request, $response, $args){
    // }
 }
 
+public function Login($request, $response, $args){
+    $param = $request->getParsedBody();
+    $rs= Usuario::RetornarUsuario($param['nombre']);
+   // var_dump($param);
+    $user=in_array($param['nombre'], array_column($rs,'nombre'));
+    //$user = array_uintersect_assoc( $param,$rs,"strcasecmp");
+    if($user){
+        $response->getBody()->write("Bienvenido");
+    }else{
+        $response->getBody()->write("Usuario no registrado");
+    } 
+    //$response->getBody()->write(json_encode($param));
+    return $response;
+}
+
+public function BorrarUsuario($request, $response, $args){
+    $aborrar = $request->getAttribute('id');
+    //$aborrar = $args['id'];
+    Usuario::BorrarUsuario($aborrar);
+    $response->getBody()->write('se borro usuario con el id: '.$aborrar);
+    return $response;
+}
+
+public  function ObtenerUsuario($request, $response, $args){
+    //  $user=  Usuario::RetornarUsuario();
+      $param = $request->getParsedBody();
+      $rs = Usuario ::RetornarUsuario($param['nombre']);
+      if($rs){ 
+         $response->getBody()->write(json_encode($rs));
+        }else{
+          $response->getBody()->write("nou ");
+      }
+      return $response;
+}
+
 public function ModificarUsuario($request, $response,$args){
     return $response->getBody()->write("modificar usuario");
 }
 
-public function ListarUsuario($request, $response,$args){
-    return $response->getBody()->write("listar usuario");
-}
-
-/*public function validarAcceso(){
-
-}*/
-
-public function Login($request, $response, $args){
-  // $valor = $args['nombre'];
+public function ListarUsuario($request, $response, $args){
     $param = $request->getParsedBody();
-   // var_dump($param);
-    $rs= Usuario::RetornarUsuario($param['nombre']);
-    $login= new Usuario();
-//no anda
-    if(count($rs)==1){
-        foreach($rs as $item){
-            foreach( $item as $art => $valueAtr){
-                $login->{$atr} = $valueAtr;
-            } 
-        }
-        if($login->$param['nombre']){
-            $response->getBody()->Write("Bienvenido");
-        }else{
-            $response->getBody()->Write("No se encontraron coincidencia");
-        }
-    }else{
-        $response->getBody()->Write("Usuario incorrecto");
-    }
-  // return $response->getBody()->write(json_encode($rs));
-    return $response;
+    $rs=Usuario::ListarUsuarios($param['nombre']);
+    return $response->getBody()->write(json_encode($rs));
 }
 
+public function validarAcceso(){
+
+}
 public function LeerJSONPost($request, $response, $args){
     // parametro que llego por el ruteo
    /*
@@ -93,7 +88,13 @@ public function LeerJSONPost($request, $response, $args){
 
     return $response;
     */
-}
 
+    /*$user= new Usuario();
+    //no anda
+    foreach($rs as $art => $valueAtr){
+        $user->{$atr} = $valueAtr;
+    } 
+    */
+    }
 }
 ?>
