@@ -29,16 +29,16 @@ class Producto{
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
     }
 
-///*WHERE nombre LIKE '$buscar%" WHERE nombre LIKE '?%'
+//SELECT * FROM `usuarios` WHERE `nombre`LIKE '%a%'
     public static function ListarProducto($nombre){ 
         $objAcceso = accesoDatos::obtenerInstancia();
-        $consulta = $objAcceso->prepararConsulta("SELECT * FROM productos");
-        //$consulta->execute(array($this->nombre));
+        $consulta = $objAcceso->prepararConsulta("SELECT * FROM productos WHERE nombre LIKE %$nombre%");
+        //$consulta->execute(array($nombre));
         $consulta->execute();
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
     }
 
-// "DELETE FROM `productos` WHERE `productos`.`idproducto` = 3"
+ //"DELETE FROM `productos` WHERE `productos`.`idproducto` = 3"
     public static function Borrar($idproducto){ 
         $objAcceso = accesoDatos::obtenerInstancia();
         $consulta = $objAcceso->prepararConsulta("DELETE  FROM productos WHERE idproducto = ?");
