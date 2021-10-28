@@ -13,8 +13,7 @@ class Usuario
         $this->clave="$_POST[clave]";
        */
     }
-  
-
+    
     public function getNombre(){
         return $this->nombre;
     }
@@ -45,8 +44,7 @@ class Usuario
 
     public static function RetornarUsuario($nombre){
         $objetoPDO = accesoDatos::obtenerInstancia();
-        $consulta = $objetoPDO->prepararConsulta("SELECT nombre FROM usuarios  WHERE nombre =?");
-      //$consulta->execute();
+        $consulta = $objetoPDO->prepararConsulta("SELECT nombre, clave FROM usuarios  WHERE nombre =?");
         $consulta->execute(array($nombre));
         return $consulta->fetchAll(PDO::FETCH_CLASS,'Usuario');
     }

@@ -6,10 +6,13 @@
         private $objetoPDO;
         private function __construct(){
         try{  
-            // $this->objetoPDO = new PDO('mysql:host=localhost:3306;dbname=mitienda;charset=utf8','root','',array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-            $this->objetoPDO = new PDO('mysql:host=remotemysql.com:3306;dbname=zFQadKUnRd;charset=utf8','zFQadKUnRd','Sq9i9kyGES',array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));  
+           // $this->objetoPDO = new PDO('mysql:host=localhost:3306;dbname=mitienda;charset=utf8','root','',array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+            //$this->objetoPDO = new PDO('mysql:host=remotemysql.com:3306;dbname=zFQadKUnRd;charset=utf8','zFQadKUnRd','Sq9i9kyGES',array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));  
+            //mysql://uznzrak5qbcotd0n:yufJrWFGHzNB9nBgXjsb@bo4iomsrayb6ibvw5pxh-mysql.services.clever-cloud.com:3306/bo4iomsrayb6ibvw5pxh
+            $this->objetoPDO = new PDO('mysql://uznzrak5qbcotd0n:yufJrWFGHzNB9nBgXjsb@bo4iomsrayb6ibvw5pxh-mysql.services.clever-cloud.com:3306/bo4iomsrayb6ibvw5pxh',array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
         }catch(PDOException $e){
-                print "ERROR: en bd".$e->getMessage();
+                print "ERROR:".$e->getMessage();
                 die();
             }
         }
