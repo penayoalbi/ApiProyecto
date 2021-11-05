@@ -15,6 +15,7 @@ require __DIR__ . '/entidades/usuario.php';
 require __DIR__ . '/entidades/producto.php';
 require __DIR__ . '/controllers/usuarioController.php';
 require __DIR__ . '/controllers/productoController.php';
+
 //crear un objeto
 $app = AppFactory::create();
 
