@@ -6,8 +6,8 @@
         private $objetoPDO;
         private function __construct(){
         try{  
-            $this->objetoPDO = new PDO('mysql:host=localhost:3306;dbname=mitienda;charset=utf8','root','',array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-            //$this->objetoPDO = new PDO('mysql:host=remotemysql.com:3306;dbname=zFQadKUnRd;charset=utf8','zFQadKUnRd','Sq9i9kyGES',array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));  
+            //$this->objetoPDO = new PDO('mysql:host=localhost:3306;dbname=mitienda;charset=utf8','root','',array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+            $this->objetoPDO = new PDO('mysql:host=remotemysql.com:3306;dbname=zFQadKUnRd;charset=utf8','zFQadKUnRd','Sq9i9kyGES',array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));  
            
 
         }catch(PDOException $e){
