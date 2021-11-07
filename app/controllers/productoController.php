@@ -67,15 +67,7 @@ public function LeerJSONPost($request, $response, $args){
      //$response->getBody()->Write($listaDeParametros['pass']);
     //El dato llega por el body como texto
     $ObjetoProvenienteDelFront =  json_decode($request->getBody());
-    //var_dump($ObjetoProvenienteDelFront);
-
-        //recorro los valores del objeto
-       /* $MiUsuario = new Usuario();
-        foreach ($ObjetoProvenienteDelFront as $atr => $valueAtr) {
-            $MiUsuario->{$atr} = $valueAtr;
-        }
-        $retorno =  $MiUsuario->CrearUsuario();
-        */
+    
     $response->getBody()->Write(json_encode($ObjetoProvenienteDelFront));
     return $response;
 }

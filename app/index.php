@@ -53,7 +53,7 @@ $app->get('/hola[/]', function (Request $request, Response $response, array $arg
 //$app->post('/usuario/new[/]', \usuarioController::class .':CrearUsuario');
 
 $app->group('/usuario', function(RouteCollectorProxy $group){
-    $group->post('/new[/]', \usuarioController::class .':CrearUsuario');
+    $group->post('/new', \usuarioController::class .':CrearUsuario');
     $group->post('/login', \usuarioController::class .':Login');
     $group->delete('/borrar/{id}', \usuarioController::class .':BorrarUsuario');
    //$group->put('/{id}[/]', \usuarioController::class . ':ModificarUsuario');

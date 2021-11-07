@@ -3,26 +3,32 @@
 class usuarioController{
 
 public function CrearUsuario($request, $response, $args){
-    $listaDeParametros = $request->getParsedBody();
+  
+    $listaDeParametros = json_decode($request->getBody());
+    var_dump($listaDeParametros);
     $NuevoUser = new Usuario();
-    $NuevoUser->setNombre($listaDeParametros['nombre']);
-    $NuevoUser->setApellido($listaDeParametros['apellido']);
-    $NuevoUser->setCorreo($listaDeParametros['correo']);
-    $NuevoUser->setUsuario($listaDeParametros['usuario']);
-    $NuevoUser->setClave($listaDeParametros['clave']);
-    $NuevoUser->NuevoUsuario();
+    foreach($listaDeParametros as $rs =>$valueAtr){
+        $NuevoUser->{$rs} = $valueAtr;
+    }
+    Usuario::NuevoUsuario($NuevoUser);
+  //  $NuevoUser->setNombre($listaDeParametros['nombre']);
+ //   $NuevoUser->setApellido($listaDeParametros['apellido']);
+ //   $NuevoUser->setCorreo($listaDeParametros['correo']);
+ //   $NuevoUser->setUsuario($listaDeParametros['usuario']);
+ //   $NuevoUser->setClave($listaDeParametros['clave']);
+ //   $NuevoUser->NuevoUsuario();
     $response->getBody()->write( json_encode($NuevoUser));
     return $response;
   
 }
-
+/*
 public function Login($request, $response, $args){
     $param = $request->getParsedBody();
-   // var_dump($param);
+    var_dump($param);
     $rs= Usuario::RetornarUsuario($param['usuario']);
    // var_dump($rs);
     $user=in_array($param['usuario'], array_column($rs,'usuario'));
-   // var_dump($param);
+   // var_dump($user);
     if($user){
     $pass = in_array($param['clave'],array_column($rs,'clave'));
     if($pass){
@@ -31,8 +37,29 @@ public function Login($request, $response, $args){
         $response->getBody()->write("pass no valido");
     }
    }else{
-    $response->getBody()->write("usuario no valido");
+    $response->getBody()->write("usuario no encontrado");
    }
+    return $response;
+}
+*/
+
+public function Login($request, $response, $args)
+{
+    $param = json_decode( $request->getBody());
+    //var_dump($param);
+    $MiUsuario = new Usuario();
+    foreach($param as $rs => $valueAtr)
+    {
+        $MiUsuario->{$rs} = $valueAtr;
+        //var_dump($MiUsuario);
+    }
+   $MiUsuario = Usuario::RetornarUsuario($MiUsuario);
+   /* if($MiUsuario){
+        $response->getBody()->write(json_encode($MiUsuario));
+    }else{
+        $response->getBody()->write("Error: usuario no existe"); 
+    }*/
+    $response->getBody()->write(json_encode($MiUsuario));
     return $response;
 }
 
@@ -61,7 +88,7 @@ public function ModificarUsuario($request, $response,$args){
 
 public function ListarUsuario($request, $response, $args){
     $param = $request->getParsedBody();
-    $rs=Usuario::ListarUsuarios($param['nombre']);
+    $rs=Usuario::traerUsuarios($param['nombre']);
     return $response->getBody()->write(json_encode($rs));
 }
 
