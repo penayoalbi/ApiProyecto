@@ -3,16 +3,20 @@
 class ProductoController{
 
 public function CrearProductos($request, $response, $args){
-    $listaDeParametros = $request->getParsedBody();
+    $listaDeParametros = json_decode($request->getBody());
+    var_dump($listaDeParametros);
 
     $nuevoProducto = new Producto();
-    $nuevoProducto->setNombre($listaDeParametros['nombre']);
-    $nuevoProducto->setDescripcion($listaDeParametros['descripcion']);
-    $nuevoProducto->CrearProducto();
+    foreach ($listaDeParametros as $rs => $valueAtr){
+        $nuevoProducto->{$rs} = $valueAtr;
+    }
+    Producto::CrearProducto($nuevoProducto);
+   // $nuevoProducto->setNombre($listaDeParametros['nombre']);
+   // $nuevoProducto->setDescripcion($listaDeParametros['descripcion']);
+   // $nuevoProducto->CrearProducto();
    
     $response->getBody()->write(json_encode($nuevoProducto));
     return $response;
-
 }
 public function ListarProductos($request, $response, $args){
     $ObjetoProvenienteDelFront = $request->getParsedBody();
