@@ -7,11 +7,20 @@ class Producto{
     public $categoria;
     public $precio;
     public $stock; 
+    public $imagen;
 
     //public $img;
     public function __Construct(){
         
     }
+
+    public function setImagen(){
+        $this->imagen= $imagen;
+    }
+    public function getImagen(){
+        return $this->imagen;
+    }
+
     public function setNombre($nombre){
         $this->nombre = $nombre;
     }
@@ -66,7 +75,7 @@ class Producto{
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
     }
 
-    public static function ListarProducto($nombre){ 
+    public static function ListarProducto(){ 
         $objAcceso = accesoDatos::obtenerInstancia();
         //$consulta = $objAcceso->prepararConsulta("SELECT * FROM `productos` WHERE nombre LIKE '%$nombre%'");
         $consulta = $objAcceso->prepararConsulta("SELECT * FROM `productos`");
