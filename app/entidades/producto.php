@@ -61,15 +61,14 @@ class Producto{
     public static function CrearProducto(Producto $prod)
     {
         $objAcceso = accesoDatos::obtenerInstancia();
-        $consulta = $objAcceso->prepararConsulta("INSERT INTO productos(nombre,descripcion,categoria,precio,stock) VALUES (?,?,?,?,?)");
+        $consulta = $objAcceso->prepararConsulta("INSERT INTO productos(nombre,descripcion,categoria,precio,stock,imagen) VALUES (?,?,?,?,?,?)");
         $consulta->bindParam(1, $prod->nombre);
         $consulta->bindParam(2, $prod->descripcion);
         $consulta->bindParam(3, $prod->categoria);
         $consulta->bindParam(4, $prod->precio);
         $consulta->bindParam(5, $prod->stock);
+        $consulta->bindParam(6, $prod->imagen);
         $consulta->execute();
-
-
       //  $consulta->execute(array($this->nombre,$this->descripcion));
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
@@ -90,6 +89,31 @@ class Producto{
         $consulta->execute(array($idproducto));
         //$consulta->execute();
         //return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
+    }
+
+    public static function Buscar($nombre){ 
+        //SELECT * FROM `productos` WHERE nombre LIKE '%?'
+        $objAcceso = accesoDatos::obtenerInstancia();
+        $consulta = $objAcceso->prepararConsulta("SELECT * FROM productos WHERE nombre LIKE %?");
+        $consulta->execute(array($nombre));
+        //$consulta->execute();
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
+    }
+
+    public static function editar($id, Producto $prod){
+        $objAcceso = accesoDatos::obtenerInstancia();
+        $consulta = $objAcceso->prepararConsulta("UPDATE productos SET nombre = ?, descripcion = ?, categoria = ?, precio = ?,  stock = ?  WHERE idproducto = ?");
+        
+        $consulta->bindParam(1, $prod->nombre);
+        $consulta->bindParam(2, $prod->descripcion);
+        $consulta->bindParam(3, $prod->categoria);
+        $consulta->bindParam(4, $prod->precio);
+        $consulta->bindParam(5, $prod->stock);
+        $consulta->execute($this->id);
+        //$consulta->execute(array($this->nombre,$this->descripcion));
+
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
+
     }
 }
  

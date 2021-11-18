@@ -65,7 +65,8 @@ $app->group('/producto',function (RouteCollectorProxy $groupProducto){
     $groupProducto->post('[/]', \productoController::class .':CrearProductos');
     $groupProducto->get('[/]', \productoController::class .':ListarProductos');
     $groupProducto->delete('/borrar/{idproducto}', \productoController::class .':BorrarProducto');
-    //$groupProducto->put('[/]', \productoController::class .':ModificarProductos');
+    $groupProducto->get('/buscar/{nombre}', \productoController::class .':BuscarProducto');
+    $groupProducto->put('/editar/{idproducto}', \productoController::class .':ModificarProductos');
    // $groupProducto->get('[/]', \productoController::class .':ListarProductos');
    //$group->get('/imagen/{idProd}[/]', \productoController::class .':RetornarImagen');
     

@@ -37,7 +37,24 @@ public function BorrarProducto($request, $response, $args){
 }
 
 public function ModificarProductos($request, $response, $args){
+    $id = $request->getAttribute('idproducto');
+    $listaDeParametros = json_decode($request->getBody());
+
+    $editar= new Producto();
+    foreach ($listaDeParametros as $rs => $valueAtr){
+        $editar->{$rs} = $valueAtr;
+    }
+    Producto::editar($id,$editar);
     return $response->getBody()->write("modificar Productos");
+}
+
+//buscar por nombre
+public function BuscarProducto($request, $response, $args){
+    $abuscar = json_decode($request->getBody());
+    //$aborrar = $args['idproducto'];
+    Producto::Buscar($abuscar);
+    $response->getBody()->write(json_encode($abuscar));
+    return $response;
 }
 /*
 public function RetornarProductos($request, $response, $args){
