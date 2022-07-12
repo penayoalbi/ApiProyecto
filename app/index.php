@@ -13,8 +13,10 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/AccesoDatos/accesoDatos.php';
 require __DIR__ . '/entidades/usuario.php';
 require __DIR__ . '/entidades/producto.php';
+require __DIR__ . '/entidades/lugares.php';
 require __DIR__ . '/controllers/usuarioController.php';
 require __DIR__ . '/controllers/productoController.php';
+require __DIR__ . '/controllers/lugarController.php';
 
 //crear un objeto
 $app = AppFactory::create();
@@ -71,6 +73,12 @@ $app->group('/producto',function (RouteCollectorProxy $groupProducto){
    //$group->get('/imagen/{idProd}[/]', \productoController::class .':RetornarImagen');
     
 });
+
+$app->group('/lugares', function (RouteCollectorProxy $groupLugares){
+    $groupLugares->post('[/]', \lugarController::class .':CrearLugar');
+    $groupLugares->get('[/]', \lugarController::class .':ListarLugar');
+});
+
 
 $app->run();//corre como app
 

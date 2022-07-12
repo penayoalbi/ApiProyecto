@@ -22,7 +22,7 @@ public function ListarProductos($request, $response, $args){
     $ObjetoProvenienteDelFront = $request->getParsedBody();
     $rs=new Producto();
    // $rs= Producto::ListarProducto($ObjetoProvenienteDelFront['buscar']);
-   $rs= Producto::ListarProducto();
+    $rs= Producto::ListarProducto();
     $response->getBody()->write(json_encode($rs));
    // $response->getBody()->Write("productos...");
     return $response;
